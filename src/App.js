@@ -73,7 +73,13 @@ function App() {
           {searchResults.map((book) => (
             <li key={book.id}>
               <b>{book.volumeInfo.title}</b> by {book.volumeInfo.authors?.join(', ') || 'Unknown author'}
-              <button onClick={() => saveBook(book)}>Save</button>
+              <button onClick={() => {
+  console.log("🧪 Save button clicked for:", book.volumeInfo?.title);
+  saveBook(book);
+}}>
+  Save
+</button>
+
             </li>
           ))}
         </ul>
