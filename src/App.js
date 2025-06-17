@@ -12,17 +12,22 @@ function App() {
   };
 
 const saveBook = async (book) => {
-  const bookData = {
-    title: book.volumeInfo.title || 'No title',
-    authors: book.volumeInfo.authors || ['Unknown author'],
-    description: book.volumeInfo.description || 'No description',
-    thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
-    note: ''
-  };
+  try {
+    const bookData = {
+      title: book.volumeInfo.title || 'No title',
+      authors: book.volumeInfo.authors || ['Unknown author'],
+      description: book.volumeInfo.description || 'No description',
+      thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
+      note: ''
+    };
 
-  axios.post('https://book-api-server.onrender.com/api/books', bookData);
-  loadSavedBooks();
+    await axios.post('https://book-api-server.onrender.com/api/books', bookData);
+    await loadSavedBooks();
+  } catch (error) {
+    console.error('Save failed:', error);
+  }
 };
+
 
 
   const loadSavedBooks = async () => {
@@ -38,6 +43,8 @@ const saveBook = async (book) => {
     <div style={{ padding: 20 }}>
       <h2>Book Search</h2>
       <input
+      id="search"
+      name="search"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Search by title..."
