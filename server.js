@@ -10,7 +10,7 @@ app.use(express.json());
 const PORT = process.env.PORT || 10000;
 
 app.use(cors({
-  origin: 'https://book-client.onrender.com'
+  origin: 'https://book-client-u6dt.onrender.com/'
 }));
 
 // MongoDB connect

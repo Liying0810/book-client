@@ -29,7 +29,7 @@ const saveBook = async (book) => {
   console.log("📦 Sending book data:", bookData);
 
   try {
-    const res = await axios.post('https://book-api-server.onrender.com/api/books', bookData);
+    const res = await axios.post('https://book-api-server-bm8l.onrender.com/api/books', bookData);
     console.log('✅ Book saved:', res.data);
     await loadSavedBooks();
   } catch (error) {
@@ -41,7 +41,7 @@ const saveBook = async (book) => {
   // Load saved books from backend
   const loadSavedBooks = async () => {
     try {
-      const res = await axios.get('https://book-api-server.onrender.com/api/books');
+      const res = await axios.get('https://book-api-server-bm8l.onrender.com/api/books');
       console.log('📚 Loaded saved books:', res.data);
       setSavedBooks(res.data);
     } catch (error) {
