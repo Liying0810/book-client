@@ -1,11 +1,23 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const cors = require('cors'); 
+const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-app.use(cors()); 
+const PORT = process.env.PORT || 10000;
+
+// ✅ CORS config for frontend access
+const corsOptions = {
+  origin: '*',
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type']
+};
+
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); // handle preflight
+
 app.use(express.json());
+
 
 const PORT = process.env.PORT || 10000;
 
