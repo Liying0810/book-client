@@ -20,7 +20,7 @@ const saveBook = async (book) => {
     note: ''
   };
 
-  await axios.post('https://book-api-server.onrender.com/api/books', bookData);
+  axios.post('https://book-api-server.onrender.com/api/books', bookData);
   loadSavedBooks();
 };
 
