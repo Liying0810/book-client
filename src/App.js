@@ -21,19 +21,24 @@ const saveBook = async (book) => {
       note: ''
     };
 
-    await axios.post('https://book-api-server.onrender.com/api/books', bookData);
+    const res = await axios.post('https://book-api-server.onrender.com/api/books', bookData);
+    console.log('✅ Book saved:', res.data);
     await loadSavedBooks();
   } catch (error) {
-    console.error('Save failed:', error);
+    console.error('❌ Save failed:', error.message);
   }
 };
 
-
-
-  const loadSavedBooks = async () => {
+const loadSavedBooks = async () => {
+  try {
     const res = await axios.get('https://book-api-server.onrender.com/api/books');
+    console.log('📚 Loaded saved books:', res.data);
     setSavedBooks(res.data);
-  };
+  } catch (error) {
+    console.error('❌ Failed to load saved books:', error.message);
+  }
+};
+
 
   useEffect(() => {
     loadSavedBooks();
@@ -61,15 +66,19 @@ const saveBook = async (book) => {
         ))}
       </ul>
 
-      <h3>Saved Books</h3>
-      <ul>
-{savedBooks.map((book) => (
-  <li key={book._id}>
-    <b>{book.title || "Untitled"}</b> by {book.authors?.length ? book.authors.join(', ') : "Unknown author"} - {book.note || "No note"}
-  </li>
-))}
+<h3>Saved Books</h3>
+{savedBooks.length === 0 ? (
+  <p>⚠️ No books saved yet.</p>
+) : (
+  <ul>
+    {savedBooks.map((book) => (
+      <li key={book._id}>
+        <b>{book.title || 'Untitled'}</b> by {book.authors?.join(', ') || 'Unknown author'} – {book.note || "No note"}
+      </li>
+    ))}
+  </ul>
+)}
 
-      </ul>
     </div>
   );
 }
