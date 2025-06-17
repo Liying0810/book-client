@@ -63,11 +63,12 @@ const saveBook = async (book) => {
 
       <h3>Saved Books</h3>
       <ul>
-        {savedBooks.map((book) => (
-          <li key={book._id}>
-            <b>{book.title}</b> by {book.authors.join(', ')} - {book.note || "No note"}
-          </li>
-        ))}
+{savedBooks.map((book) => (
+  <li key={book._id}>
+    <b>{book.title || "Untitled"}</b> by {book.authors?.length ? book.authors.join(', ') : "Unknown author"} - {book.note || "No note"}
+  </li>
+))}
+
       </ul>
     </div>
   );
