@@ -17,23 +17,26 @@ function App() {
   };
 
   // Save selected book to backend
-  const saveBook = async (book) => {
-    const bookData = {
-      title: book.volumeInfo.title || 'No title',
-      authors: book.volumeInfo.authors || ['Unknown author'],
-      description: book.volumeInfo.description || 'No description',
-      thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
-      note: ''
-    };
-
-    try {
-      const res = await axios.post('https://book-api-server.onrender.com/api/books', bookData);
-      console.log('✅ Book saved:', res.data);
-      await loadSavedBooks();
-    } catch (error) {
-      console.error('❌ Save failed:', error.message);
-    }
+const saveBook = async (book) => {
+  const bookData = {
+    title: book.volumeInfo.title || 'No title',
+    authors: book.volumeInfo.authors || ['Unknown author'],
+    description: book.volumeInfo.description || 'No description',
+    thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
+    note: ''
   };
+
+  console.log("📦 Sending book data:", bookData);
+
+  try {
+    const res = await axios.post('https://book-api-server.onrender.com/api/books', bookData);
+    console.log('✅ Book saved:', res.data);
+    await loadSavedBooks();
+  } catch (error) {
+    console.error('❌ Save failed:', error.response?.data || error.message);
+  }
+};
+
 
   // Load saved books from backend
   const loadSavedBooks = async () => {
