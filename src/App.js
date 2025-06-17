@@ -42,7 +42,7 @@ function App() {
       console.log('📚 Loaded saved books:', res.data);
       setSavedBooks(res.data);
     } catch (error) {
-      console.error('❌ Failed to load saved books:', error.message);
+      console.error('❌ Save failed:', error.response?.data || error.message);
     }
   };
 
