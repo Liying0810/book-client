@@ -65,25 +65,30 @@ function App() {
       />
       <button onClick={searchBooks}>Search</button>
 
-      <h3>Results</h3>
-      {searchResults.length === 0 ? (
-        <p>No search results.</p>
-      ) : (
-        <ul>
-          {searchResults.map((book) => (
-            <li key={book.id}>
-              <b>{book.volumeInfo.title}</b> by {book.volumeInfo.authors?.join(', ') || 'Unknown author'}
-              <button onClick={() => {
-  console.log("🧪 Save button clicked for:", book.volumeInfo?.title);
-  saveBook(book);
-}}>
-  Save
-</button>
+<h3>Results</h3>
+{searchResults.length === 0 ? (
+  <p>No search results.</p>
+) : (
+  <ul>
+    {searchResults.map((book) => {
+      const title = book.volumeInfo?.title || 'No title';
+      const authors = book.volumeInfo?.authors?.join(', ') || 'Unknown author';
 
-            </li>
-          ))}
-        </ul>
-      )}
+      return (
+        <li key={book.id}>
+          <b>{title}</b> by {authors}
+          <button onClick={() => {
+            console.log("🧪 Save button clicked for:", title);
+            saveBook(book);
+          }}>
+            Save
+          </button>
+        </li>
+      );
+    })}
+  </ul>
+)}
+
 
       <h3>Saved Books</h3>
       {Array.isArray(savedBooks) && savedBooks.length === 0 ? (
