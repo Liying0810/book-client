@@ -18,29 +18,28 @@ function App() {
 
   // Save selected book to backend
 const saveBook = async (book) => {
+  const title = book?.volumeInfo?.title || 'No title';
+  const authors = Array.isArray(book?.volumeInfo?.authors)
+    ? book.volumeInfo.authors
+    : ['Unknown author'];
+  const description = book?.volumeInfo?.description || 'No description';
+  const thumbnail = book?.volumeInfo?.imageLinks?.thumbnail || '';
+
+  const bookData = { title, authors, description, thumbnail, note: '' };
+
+  console.log("🧪 Save button clicked for:", title);
+  console.log("📦 Sending book data:", bookData);
+
   try {
-    if (!book.volumeInfo) {
-      console.warn("⛔ No volumeInfo found in book");
-      return;
-    }
-
-    const bookData = {
-      title: book.volumeInfo.title || 'No title',
-      authors: book.volumeInfo.authors || ['Unknown author'],
-      description: book.volumeInfo.description || 'No description',
-      thumbnail: book.volumeInfo.imageLinks?.thumbnail || '',
-      note: ''
-    };
-
-    console.log("📦 Sending book data:", bookData);
-
-    const res = await axios.post('https://book-api-server.onrender.com/api/books', bookData);
-    console.log("✅ Book saved:", res.data);
+    const res = await axios.post('https://book-api-server-bm8l.onrender.com/api/books', bookData);
+    console.log("✅ Saved:", res.data);
     await loadSavedBooks();
-  } catch (err) {
-    console.error("❌ Save failed:", err.response?.data || err.message);
+  } catch (error) {
+    console.error('❌ Save failed:', error.response?.data || error.message);
   }
 };
+
+
 
 
 
